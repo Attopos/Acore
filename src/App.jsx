@@ -4,6 +4,7 @@ import ProjectCard from './components/ProjectCard'
 import ProjectDetailPage from './components/ProjectDetailPage'
 import StackDetailPage from './components/StackDetailPage'
 import StackIcon from './components/StackIcon'
+import StacksPage from './components/StacksPage'
 import { fetchNotes, saveNote } from './lib/notesApi'
 import { isSupabaseConfigured, supabase } from './lib/supabase'
 
@@ -15,7 +16,7 @@ function Header() {
     <header className="mb-12 border-b border-[#6a4247]/48 pb-8">
       <div className="max-w-3xl">
         <h1 className="font-cinzel text-5xl font-semibold tracking-calm text-[#f0e8e2] sm:text-6xl">
-          Acore
+          Projects
         </h1>
       </div>
     </header>
@@ -23,33 +24,139 @@ function Header() {
 }
 
 function AppShell({
-  authStatus,
-  notesStatus,
+  isProjectsActive,
+  isStacksActive,
   isSignedIn,
+  avatarUrl,
+  userLabel,
+  onNavigateToProjects,
+  onNavigateToStacks,
   onSignIn,
   onSignOut,
   children,
 }) {
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false)
+  const menuRef = useRef(null)
+
+  useEffect(() => {
+    if (!isAccountMenuOpen) {
+      return undefined
+    }
+
+    const handlePointerDown = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsAccountMenuOpen(false)
+      }
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsAccountMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('mousedown', handlePointerDown)
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('mousedown', handlePointerDown)
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isAccountMenuOpen])
+
   return (
     <div className="min-h-screen bg-[#2d2b33] text-[#ece6e1]">
-      <div className="border-b border-[#5d565c] bg-[#35323a]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-4 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
-          <div className="min-w-0">
-            <p className="text-sm text-[#ece6e1]">{authStatus}</p>
-            <p className="mt-1 text-sm text-[#b7aaa4]">{notesStatus}</p>
+      <div className="fixed inset-x-0 top-0 z-50 border-b border-[#5d565c] bg-[#35323a]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4 sm:px-8 lg:px-12">
+          <div className="flex items-center gap-5">
+            <div className="font-cinzel text-3xl font-semibold tracking-calm text-[#f0e8e2]">
+              Acore
+            </div>
+
+            <button
+              type="button"
+              onClick={onNavigateToProjects}
+              className={`rounded-full px-4 py-2 text-sm transition ${
+                isProjectsActive
+                  ? 'bg-[#4a4450] text-[#f0e8e2]'
+                  : 'text-[#cbbeb8] hover:bg-[#403d46] hover:text-[#f0e8e2]'
+              }`}
+              aria-current={isProjectsActive ? 'page' : undefined}
+            >
+              Projects
+            </button>
+
+            <button
+              type="button"
+              onClick={onNavigateToStacks}
+              className={`rounded-full px-4 py-2 text-sm transition ${
+                isStacksActive
+                  ? 'bg-[#4a4450] text-[#f0e8e2]'
+                  : 'text-[#cbbeb8] hover:bg-[#403d46] hover:text-[#f0e8e2]'
+              }`}
+              aria-current={isStacksActive ? 'page' : undefined}
+            >
+              Stacks
+            </button>
           </div>
 
-          <button
-            type="button"
-            onClick={isSignedIn ? onSignOut : onSignIn}
-            className="inline-flex items-center justify-center rounded-full border border-[#7b7076] bg-[#403d46] px-4 py-2 text-sm text-[#dfd3cd] transition hover:border-[#94868d] hover:bg-[#49454f]"
-          >
-            {isSignedIn ? 'Sign out' : 'Sign in with GitHub'}
-          </button>
+          {isSignedIn ? (
+            <div ref={menuRef} className="relative">
+              <button
+                type="button"
+                onClick={() => setIsAccountMenuOpen((open) => !open)}
+                className="inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-[#7b7076] bg-[#403d46] text-sm text-[#dfd3cd] transition hover:border-[#94868d] hover:bg-[#49454f]"
+                aria-label={`${userLabel} account menu`}
+                aria-expanded={isAccountMenuOpen}
+                aria-haspopup="menu"
+                title={userLabel}
+              >
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt={userLabel}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="text-base font-medium uppercase">
+                    {userLabel.charAt(0)}
+                  </span>
+                )}
+              </button>
+
+              {isAccountMenuOpen ? (
+                <div
+                  className="absolute right-0 top-[calc(100%+0.75rem)] min-w-[9rem] rounded-2xl border border-[#6d646b] bg-[#3a3640]/98 p-2 shadow-[0_20px_45px_rgba(0,0,0,0.28)] backdrop-blur"
+                  role="menu"
+                  aria-label="Account actions"
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsAccountMenuOpen(false)
+                      onSignOut()
+                    }}
+                    className="flex w-full items-center justify-start rounded-xl px-3 py-2 text-sm text-[#ece6e1] transition hover:bg-[#4a4450]"
+                    role="menuitem"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={onSignIn}
+              className="inline-flex items-center justify-center rounded-full border border-[#7b7076] bg-[#403d46] px-4 py-2 text-sm text-[#dfd3cd] transition hover:border-[#94868d] hover:bg-[#49454f]"
+            >
+              Sign in with GitHub
+            </button>
+          )}
         </div>
       </div>
 
-      {children}
+      <div className="pt-20 sm:pt-24">{children}</div>
     </div>
   )
 }
@@ -72,6 +179,13 @@ function StackChip({ label, onClick }) {
 }
 
 function getRoute(pathname) {
+  if (pathname === '/stacks') {
+    return {
+      type: 'stacks',
+      slug: null,
+    }
+  }
+
   const projectMatch = pathname.match(/^\/projects\/([^/]+)$/)
   if (projectMatch) {
     return {
@@ -97,7 +211,7 @@ function getRoute(pathname) {
 export default function App() {
   const [pathname, setPathname] = useState(window.location.pathname)
   const [session, setSession] = useState(null)
-  const [authStatus, setAuthStatus] = useState(
+  const [, setAuthStatus] = useState(
     isSupabaseConfigured
       ? 'Checking GitHub sign-in...'
       : 'Supabase is not configured yet.',
@@ -118,7 +232,7 @@ export default function App() {
       return {}
     }
   })
-  const [notesStatus, setNotesStatus] = useState(
+  const [, setNotesStatus] = useState(
     isSupabaseConfigured
       ? 'Sign in with GitHub to sync your private notes.'
       : 'Using local browser storage only.',
@@ -131,6 +245,10 @@ export default function App() {
     session?.user?.user_metadata?.preferred_username ??
     session?.user?.email ??
     'your account'
+  const avatarUrl =
+    session?.user?.user_metadata?.avatar_url ??
+    session?.user?.user_metadata?.picture ??
+    null
 
   useEffect(() => {
     const handlePopState = () => {
@@ -280,6 +398,10 @@ export default function App() {
     navigateTo(`/stacks/${encodeURIComponent(stack)}`)
   }
 
+  const handleOpenStacksPage = () => {
+    navigateTo('/stacks')
+  }
+
   const handleBackToProjects = () => {
     navigateTo('/')
   }
@@ -359,6 +481,13 @@ export default function App() {
   }
 
   const route = getRoute(pathname)
+  const stackEntries = Object.entries(stackNotes)
+    .map(([name, summary]) => ({
+      name,
+      summary,
+      projectCount: projects.filter((project) => project.stacks.includes(name)).length,
+    }))
+    .sort((left, right) => left.name.localeCompare(right.name))
 
   if (route.type === 'project') {
     const activeProject =
@@ -366,9 +495,13 @@ export default function App() {
 
     return (
       <AppShell
-        authStatus={authStatus}
-        notesStatus={notesStatus}
+        isProjectsActive={false}
+        isStacksActive={false}
         isSignedIn={Boolean(userId)}
+        avatarUrl={avatarUrl}
+        userLabel={userLabel}
+        onNavigateToProjects={handleBackToProjects}
+        onNavigateToStacks={handleOpenStacksPage}
         onSignIn={handleSignIn}
         onSignOut={handleSignOut}
       >
@@ -391,9 +524,13 @@ export default function App() {
 
     return (
       <AppShell
-        authStatus={authStatus}
-        notesStatus={notesStatus}
+        isProjectsActive={false}
+        isStacksActive
         isSignedIn={Boolean(userId)}
+        avatarUrl={avatarUrl}
+        userLabel={userLabel}
+        onNavigateToProjects={handleBackToProjects}
+        onNavigateToStacks={handleOpenStacksPage}
         onSignIn={handleSignIn}
         onSignOut={handleSignOut}
       >
@@ -410,11 +547,33 @@ export default function App() {
     )
   }
 
+  if (route.type === 'stacks') {
+    return (
+      <AppShell
+        isProjectsActive={false}
+        isStacksActive
+        isSignedIn={Boolean(userId)}
+        avatarUrl={avatarUrl}
+        userLabel={userLabel}
+        onNavigateToProjects={handleBackToProjects}
+        onNavigateToStacks={handleOpenStacksPage}
+        onSignIn={handleSignIn}
+        onSignOut={handleSignOut}
+      >
+        <StacksPage stacks={stackEntries} onOpenStack={handleOpenStack} />
+      </AppShell>
+    )
+  }
+
   return (
     <AppShell
-      authStatus={authStatus}
-      notesStatus={notesStatus}
+      isProjectsActive
+      isStacksActive={false}
       isSignedIn={Boolean(userId)}
+      avatarUrl={avatarUrl}
+      userLabel={userLabel}
+      onNavigateToProjects={handleBackToProjects}
+      onNavigateToStacks={handleOpenStacksPage}
       onSignIn={handleSignIn}
       onSignOut={handleSignOut}
     >
