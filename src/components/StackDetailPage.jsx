@@ -4,10 +4,12 @@ import StackIcon from './StackIcon'
 
 export default function StackDetailPage({
   stack,
+  stackNote,
   summary,
   relatedProjects,
   onBack,
   onOpenProject,
+  onStackNoteChange,
 }) {
   if (!stack) {
     return (
@@ -99,6 +101,8 @@ export default function StackDetailPage({
 
         <div className="mt-4 rounded-[26px] border border-[#655d64] bg-[#4a4750] p-4 sm:p-5">
           <textarea
+            value={stackNote}
+            onChange={(event) => onStackNoteChange(stack, event.target.value)}
             className="min-h-[440px] w-full resize-y border-0 bg-transparent text-[15px] leading-8 text-[#e6ddd7] outline-none placeholder:text-[#a79892]"
             placeholder="Add implementation notes, references, patterns, or reminders for this stack..."
           />

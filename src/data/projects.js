@@ -14,8 +14,8 @@ export const projects = [
     ],
   },
   {
-    id: 'ac-site',
-    name: 'AC Site',
+    id: 'acore',
+    name: 'Acore',
     iconLabel: 'AC',
     stacks: ['React', 'Vite', 'JavaScript', 'CSS'],
     devLog: [

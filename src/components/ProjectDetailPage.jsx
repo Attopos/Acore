@@ -2,7 +2,13 @@ import { ArrowLeft } from 'lucide-react'
 import ProjectIcon from './ProjectIcon'
 import StackIcon from './StackIcon'
 
-export default function ProjectDetailPage({ project, onBack, onOpenStack }) {
+export default function ProjectDetailPage({
+  project,
+  projectNote,
+  onBack,
+  onOpenStack,
+  onProjectNoteChange,
+}) {
   if (!project) {
     return (
       <div className="mx-auto max-w-5xl px-6 pb-16 pt-10 sm:px-8 sm:pt-14 lg:px-12 lg:pt-20">
@@ -69,6 +75,8 @@ export default function ProjectDetailPage({ project, onBack, onOpenStack }) {
 
         <div className="mt-4 rounded-[26px] border border-[#655d64] bg-[#4a4750] p-4 sm:p-5">
           <textarea
+            value={projectNote}
+            onChange={(event) => onProjectNoteChange(project.id, event.target.value)}
             className="min-h-[440px] w-full resize-y border-0 bg-transparent text-[15px] leading-8 text-[#e6ddd7] outline-none placeholder:text-[#a79892]"
             placeholder="Add notes, history, or implementation details here..."
           />

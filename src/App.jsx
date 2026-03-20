@@ -5,12 +5,15 @@ import ProjectDetailPage from './components/ProjectDetailPage'
 import StackDetailPage from './components/StackDetailPage'
 import StackIcon from './components/StackIcon'
 
+const PROJECT_NOTES_STORAGE_KEY = 'acore:project-notes'
+const STACK_NOTES_STORAGE_KEY = 'acore:stack-notes'
+
 function Header() {
   return (
     <header className="mb-12 border-b border-[#6a4247]/48 pb-8">
       <div className="max-w-3xl">
         <h1 className="font-cinzel text-5xl font-semibold tracking-calm text-[#f0e8e2] sm:text-6xl">
-          Project Stacks
+          Acore
         </h1>
       </div>
     </header>
@@ -59,6 +62,22 @@ function getRoute(pathname) {
 
 export default function App() {
   const [pathname, setPathname] = useState(window.location.pathname)
+  const [projectNotes, setProjectNotes] = useState(() => {
+    try {
+      const savedNotes = window.localStorage.getItem(PROJECT_NOTES_STORAGE_KEY)
+      return savedNotes ? JSON.parse(savedNotes) : {}
+    } catch {
+      return {}
+    }
+  })
+  const [stackPageNotes, setStackPageNotes] = useState(() => {
+    try {
+      const savedNotes = window.localStorage.getItem(STACK_NOTES_STORAGE_KEY)
+      return savedNotes ? JSON.parse(savedNotes) : {}
+    } catch {
+      return {}
+    }
+  })
 
   useEffect(() => {
     const handlePopState = () => {
@@ -68,6 +87,20 @@ export default function App() {
     window.addEventListener('popstate', handlePopState)
     return () => window.removeEventListener('popstate', handlePopState)
   }, [])
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      PROJECT_NOTES_STORAGE_KEY,
+      JSON.stringify(projectNotes),
+    )
+  }, [projectNotes])
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      STACK_NOTES_STORAGE_KEY,
+      JSON.stringify(stackPageNotes),
+    )
+  }, [stackPageNotes])
 
   const navigateTo = (nextPath) => {
     window.history.pushState({}, '', nextPath)
@@ -86,6 +119,20 @@ export default function App() {
     navigateTo('/')
   }
 
+  const handleProjectNoteChange = (projectId, value) => {
+    setProjectNotes((currentNotes) => ({
+      ...currentNotes,
+      [projectId]: value,
+    }))
+  }
+
+  const handleStackNoteChange = (stackName, value) => {
+    setStackPageNotes((currentNotes) => ({
+      ...currentNotes,
+      [stackName]: value,
+    }))
+  }
+
   const route = getRoute(pathname)
 
   if (route.type === 'project') {
@@ -96,8 +143,10 @@ export default function App() {
       <div className="min-h-screen bg-[#2d2b33] text-[#ece6e1]">
         <ProjectDetailPage
           project={activeProject}
+          projectNote={activeProject ? projectNotes[activeProject.id] ?? '' : ''}
           onBack={handleBackToProjects}
           onOpenStack={handleOpenStack}
+          onProjectNoteChange={handleProjectNoteChange}
         />
       </div>
     )
@@ -113,10 +162,12 @@ export default function App() {
       <div className="min-h-screen bg-[#2d2b33] text-[#ece6e1]">
         <StackDetailPage
           stack={stackExists ? route.slug : null}
+          stackNote={stackExists ? stackPageNotes[route.slug] ?? '' : ''}
           summary={stackExists ? stackNotes[route.slug] : null}
           relatedProjects={relatedProjects}
           onBack={handleBackToProjects}
           onOpenProject={handleOpenProject}
+          onStackNoteChange={handleStackNoteChange}
         />
       </div>
     )
