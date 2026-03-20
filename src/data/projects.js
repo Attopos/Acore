@@ -2,6 +2,7 @@ export const projects = [
   {
     id: 'portfolio-tracker',
     name: 'Portfolio Tracker',
+    iconLabel: 'PT',
     stacks: ['React', 'Vite', 'Express', 'JavaScript', 'CSS', 'SQLite'],
     devLog: [
       'Reshaping the interface so portfolio views feel calmer and easier to scan.',
@@ -12,6 +13,7 @@ export const projects = [
   {
     id: 'ac-site',
     name: 'AC Site',
+    iconLabel: 'AC',
     stacks: ['React', 'Vite', 'JavaScript', 'CSS'],
     devLog: [
       'Exploring homepage directions that feel more intentional and less like a generic portfolio.',
@@ -22,6 +24,7 @@ export const projects = [
   {
     id: 'openclaw-console',
     name: 'OpenClaw Console',
+    iconLabel: 'OC',
     stacks: ['React', 'Node.js', 'JavaScript'],
     devLog: [
       'Mapping how local tooling and infra touchpoints should surface in one place.',
@@ -32,6 +35,7 @@ export const projects = [
   {
     id: 'esp32-playground',
     name: 'ESP32 Playground',
+    iconLabel: 'E32',
     stacks: ['PlatformIO', 'ESP32', 'C++', 'VSCode'],
     devLog: [
       'Stabilizing the development toolchain so device iteration becomes predictable.',
