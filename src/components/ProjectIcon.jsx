@@ -3,7 +3,7 @@ export default function ProjectIcon({
   className = 'h-12 w-12',
   imageClassName = 'h-full w-full',
 }) {
-  const shellClassName = `flex shrink-0 items-center justify-center rounded-2xl border border-[#c9beb8] bg-[#f3ece7] text-[0.82rem] font-semibold uppercase tracking-[0.08em] text-[#2d2627] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] ${className}`.trim()
+  const shellClassName = `flex shrink-0 items-center justify-center rounded-2xl border border-[#b3a8a2] bg-[#ddd3cc] text-[0.82rem] font-semibold uppercase tracking-[0.08em] text-[#2d2627] shadow-[inset_0_1px_0_rgba(255,255,255,0.42)] ${className}`.trim()
 
   if (project.iconSrc) {
     return (

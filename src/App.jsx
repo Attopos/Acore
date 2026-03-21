@@ -69,14 +69,14 @@ function AppShell({
       <div className="fixed inset-x-0 top-0 z-50 border-b border-[#5d565c] bg-[#35323a]/95 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4 sm:px-8 lg:px-12">
           <div className="flex items-center gap-5">
-            <div className="font-cinzel text-3xl font-semibold tracking-calm text-[#f0e8e2]">
+            <div className="font-cinzel text-[2.1rem] font-semibold tracking-calm text-[#f0e8e2]">
               Acore
             </div>
 
             <button
               type="button"
               onClick={onNavigateToProjects}
-              className={`rounded-full px-4 py-2 text-sm transition ${
+              className={`rounded-full px-4 py-2 text-[14px] transition ${
                 isProjectsActive
                   ? 'bg-[#4a4450] text-[#f0e8e2]'
                   : 'text-[#cbbeb8] hover:bg-[#403d46] hover:text-[#f0e8e2]'
@@ -89,7 +89,7 @@ function AppShell({
             <button
               type="button"
               onClick={onNavigateToStacks}
-              className={`rounded-full px-4 py-2 text-sm transition ${
+              className={`rounded-full px-4 py-2 text-[14px] transition ${
                 isStacksActive
                   ? 'bg-[#4a4450] text-[#f0e8e2]'
                   : 'text-[#cbbeb8] hover:bg-[#403d46] hover:text-[#f0e8e2]'
@@ -105,7 +105,7 @@ function AppShell({
               <button
                 type="button"
                 onClick={() => setIsAccountMenuOpen((open) => !open)}
-                className="inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-[#7b7076] bg-[#403d46] text-sm text-[#dfd3cd] transition hover:border-[#94868d] hover:bg-[#49454f]"
+                className="inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-[#7b7076] bg-[#403d46] text-[14px] text-[#dfd3cd] transition hover:border-[#94868d] hover:bg-[#49454f]"
                 aria-label={`${userLabel} account menu`}
                 aria-expanded={isAccountMenuOpen}
                 aria-haspopup="menu"
@@ -136,7 +136,7 @@ function AppShell({
                       setIsAccountMenuOpen(false)
                       onSignOut()
                     }}
-                    className="flex w-full items-center justify-start rounded-xl px-3 py-2 text-sm text-[#ece6e1] transition hover:bg-[#4a4450]"
+                    className="flex w-full items-center justify-start rounded-xl px-3 py-2 text-[14px] text-[#ece6e1] transition hover:bg-[#4a4450]"
                     role="menuitem"
                   >
                     Sign out
@@ -148,7 +148,7 @@ function AppShell({
             <button
               type="button"
               onClick={onSignIn}
-              className="inline-flex items-center justify-center rounded-full border border-[#7b7076] bg-[#403d46] px-4 py-2 text-sm text-[#dfd3cd] transition hover:border-[#94868d] hover:bg-[#49454f]"
+              className="inline-flex items-center justify-center rounded-full border border-[#7b7076] bg-[#403d46] px-4 py-2 text-[14px] text-[#dfd3cd] transition hover:border-[#94868d] hover:bg-[#49454f]"
             >
               Sign in with GitHub
             </button>
@@ -169,7 +169,7 @@ function StackChip({ label, onClick }) {
         event.stopPropagation()
         onClick()
       }}
-      className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[#8a7f85] bg-[#817981] transition hover:border-[#9a8f95] hover:bg-[#8b838b]"
+      className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-[#b3a8a2] bg-[#ddd3cc] shadow-[inset_0_1px_0_rgba(255,255,255,0.42)] transition hover:border-[#c0b5af] hover:bg-[#e5dbd4]"
       aria-label={label}
       title={label}
     >
@@ -537,7 +537,6 @@ export default function App() {
         <StackDetailPage
           stack={stackExists ? route.slug : null}
           stackNote={stackExists ? stackPageNotes[route.slug] ?? '' : ''}
-          summary={stackExists ? stackNotes[route.slug] : null}
           relatedProjects={relatedProjects}
           onBack={handleBackToProjects}
           onOpenProject={handleOpenProject}

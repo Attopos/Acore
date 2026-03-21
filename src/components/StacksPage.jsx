@@ -21,7 +21,7 @@ export default function StacksPage({ stacks, onOpenStack }) {
           >
             <StackIcon label={stack.name} className="h-14 w-14" chrome />
             <div className="text-[#282223]">
-              <h2 className="font-cinzel text-[1.85rem] font-semibold tracking-[0.015em]">
+              <h2 className="font-cinzel text-[1.95rem] font-semibold tracking-[0.015em]">
                 {stack.name}
               </h2>
             </div>

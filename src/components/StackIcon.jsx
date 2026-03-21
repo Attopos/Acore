@@ -5,7 +5,7 @@ function StackIconFallback({ label, className = '', chrome = true }) {
     <div
       className={`flex items-center justify-center text-[10px] font-semibold uppercase tracking-[0.06em] ${
         chrome
-          ? 'rounded-xl border border-[#8a7f85] bg-[#817981] text-[#f2eae4]'
+          ? 'rounded-2xl border border-[#b3a8a2] bg-[#ddd3cc] text-[#2d2627] shadow-[inset_0_1px_0_rgba(255,255,255,0.42)]'
           : 'text-[#eee5df]'
       } ${className}`.trim()}
       title={label}
@@ -31,7 +31,7 @@ export default function StackIcon({
     <div
       className={`flex items-center justify-center ${
         chrome
-          ? 'rounded-xl border border-[#8a7f85] bg-[#817981] text-white'
+          ? 'rounded-2xl border border-[#b3a8a2] bg-[#ddd3cc] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.42)]'
           : 'text-white'
       } ${className}`.trim()}
       title={icon.title}
