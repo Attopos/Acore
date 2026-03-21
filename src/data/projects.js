@@ -49,15 +49,48 @@ export const projects = [
 ]
 
 export const stackNotes = {
-  React: 'Interface layer and component structure.',
-  Vite: 'Fast local build tooling and page iteration.',
-  Express: 'Server routes and lightweight backend glue.',
-  JavaScript: 'Primary implementation language across the app.',
-  CSS: 'Surface refinement, layout rhythm, and visual control.',
-  SQLite: 'Compact local data storage for the first system shape.',
-  'Node.js': 'Runtime for local tooling and service logic.',
-  PlatformIO: 'Embedded project orchestration and build workflow.',
-  ESP32: 'Microcontroller target for experiments and device testing.',
-  'C++': 'Firmware-level implementation for hardware behavior.',
-  VSCode: 'Primary editing and embedded workflow environment.',
+  React: {
+    summary: 'Interface layer and component structure.',
+    usages: ['Front-end'],
+  },
+  Vite: {
+    summary: 'Fast local build tooling and page iteration.',
+    usages: ['Build', 'Tooling'],
+  },
+  Express: {
+    summary: 'Server routes and lightweight backend glue.',
+    usages: ['Back-end', 'API'],
+  },
+  JavaScript: {
+    summary: 'Primary implementation language across the app.',
+    usages: ['Language', 'Front-end', 'Back-end'],
+  },
+  CSS: {
+    summary: 'Surface refinement, layout rhythm, and visual control.',
+    usages: ['Front-end', 'Styling'],
+  },
+  SQLite: {
+    summary: 'Compact local data storage for the first system shape.',
+    usages: ['Database', 'Storage'],
+  },
+  'Node.js': {
+    summary: 'Runtime for local tooling and service logic.',
+    usages: ['Back-end', 'Runtime', 'Tooling'],
+  },
+  PlatformIO: {
+    summary: 'Embedded project orchestration and build workflow.',
+    usages: ['Embedded', 'Build', 'Tooling'],
+  },
+  ESP32: {
+    summary: 'Microcontroller target for experiments and device testing.',
+    usages: ['Embedded', 'Hardware'],
+  },
+  'C++': {
+    summary: 'Firmware-level implementation for hardware behavior.',
+    usages: ['Language', 'Embedded'],
+  },
+  VSCode: {
+    summary: 'Primary editing and embedded workflow environment.',
+    usages: ['Tooling', 'Editor'],
+  },
 }

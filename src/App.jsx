@@ -482,9 +482,10 @@ export default function App() {
 
   const route = getRoute(pathname)
   const stackEntries = Object.entries(stackNotes)
-    .map(([name, summary]) => ({
+    .map(([name, details]) => ({
       name,
-      summary,
+      summary: details.summary,
+      usages: details.usages ?? [],
       projectCount: projects.filter((project) => project.stacks.includes(name)).length,
     }))
     .sort((left, right) => left.name.localeCompare(right.name))
