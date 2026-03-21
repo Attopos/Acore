@@ -1,5 +1,7 @@
 import portfolioIcon from '../assets/project-icons/portfolio-icon.svg'
 
+const acoreIcon = '/acore-icon.png'
+
 export const projects = [
   {
     id: 'portfolio-tracker',
@@ -17,6 +19,7 @@ export const projects = [
     id: 'acore',
     name: 'Acore',
     iconLabel: 'AC',
+    iconSrc: acoreIcon,
     stacks: ['React', 'Vite', 'JavaScript', 'CSS'],
     devLog: [
       'Exploring homepage directions that feel more intentional and less like a generic portfolio.',

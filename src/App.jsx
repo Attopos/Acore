@@ -69,9 +69,11 @@ function AppShell({
       <div className="fixed inset-x-0 top-0 z-50 border-b border-[#5d565c] bg-[#35323a]/95 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4 sm:px-8 lg:px-12">
           <div className="flex items-center gap-5">
-            <div className="font-cinzel text-[2.1rem] font-semibold tracking-calm text-[#f0e8e2]">
-              Acore
-            </div>
+            <img
+              src="/acore-icon.png"
+              alt="Acore"
+              className="h-11 w-11 object-contain"
+            />
 
             <button
               type="button"
